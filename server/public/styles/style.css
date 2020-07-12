@@ -1,10 +1,12 @@
 body {
-  margin: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 #taskInput {
   width: 500px;
-  margin-right: 10px;
+  margin-right: 15px;
+  margin-left: 10px;
 }
 
 .btn-enter-task {
@@ -12,5 +14,63 @@ body {
 }
 
 #task-table {
-  margin-top: 40px;
+  margin-top: 20px;
+}
+
+.footer {
+  text-align: left;
+  margin-left: 0px;
+}
+.jumbotronImage {
+  margin-bottom: 100px;
+  background-image: url('productivity.jpg');
+  background-size: 100%;
+  background-position-y: 30%;
+}
+.headingText {
+  color: white;
+}
+label {
+  font-size: 1.3rem;
+}
+button {
+  background-color: rgb(4, 100, 68);
+}
+
+tbody {
+  font-size: 1.2rem;
+}
+.task-box {
+  width: 70%;
+}
+.complete-box {
+  width: 20%;
+}
+
+.enter-task-btn {
+}
+
+th {
+  font-size: 1.5rem;
+}
+
+footer {
+  margin-top: 300px;
+}
+table {
+  border-collapse: collapse;
+}
+
+td {
+  position: relative;
+  padding: 5px 10px;
+}
+
+tr.strikeout td:before {
+  content: ' ';
+  position: absolute;
+  top: 40%;
+  left: 0;
+  border-bottom: 2px solid #111;
+  width: 100%;
 }

@@ -55,6 +55,8 @@ function submitTask() {
 function clickTaskComplete() {
   const id = $(this).parent().parent().data('id');
   console.log('edit task status', id);
+
+  $(this).addClass('complete');
   updateTaskStatus(id);
 
   //   let newTaskStatus = 'complete';
@@ -62,6 +64,7 @@ function clickTaskComplete() {
 
   //   const id = $(this).data('idTask');
 }
+
 function updateTaskStatus(taskId) {
   //   if (newTaskStatus === 'complete') {
   //     console.log(newTaskStatus);
@@ -99,19 +102,35 @@ function getTaskData() {
       $('#todoTableBody').empty();
 
       for (let task of listOfTasks) {
-        let tableRow = $(`
-            <tr>
-            <td>${task.task}</td>
-            <td><button data-id-task="${task.id}" class="js-btn-task-status">
-            Complete?
+        if (task.task_status === 'complete') {
+          let tableRow = $(`
+            <tr class="strikeout">
+            <td class="task-box">${task.task}</td>
+            <td class="complete-box"><button data-id-task="${task.id}" class="js-btn-task-status btn btn-outline-dark complete-button">
+            Complete
           </button></td>
-          <td><button class="js-btn-delete">
+          <td><button class="js-btn-delete btn btn-outline-danger">
             Delete
           </button></td>
           </tr>`);
 
-        tableRow.data('id', task.id);
-        $('#todoTableBody').append(tableRow);
+          tableRow.data('id', task.id);
+          $('#todoTableBody').append(tableRow);
+        } else {
+          let tableRow = $(`
+            <tr class="">
+            <td class="task-box">${task.task}</td>
+            <td class="complete-box"><button data-id-task="${task.id}" class="js-btn-task-status btn btn-outline-dark complete-button">
+            Complete
+          </button></td>
+          <td><button class="js-btn-delete btn btn-outline-danger">
+            Delete
+          </button></td>
+          </tr>`);
+
+          tableRow.data('id', task.id);
+          $('#todoTableBody').append(tableRow);
+        }
       }
     })
     .catch(function (error) {
