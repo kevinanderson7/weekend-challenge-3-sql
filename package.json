@@ -19,6 +19,7 @@
   "homepage": "https://github.com/kevinanderson7/weekend-challenge-3-sql#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.5.0",
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "pg": "^8.3.0"

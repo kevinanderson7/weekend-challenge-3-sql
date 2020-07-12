@@ -1,0 +1,16 @@
+body {
+  margin: 20px;
+}
+
+#taskInput {
+  width: 500px;
+  margin-right: 10px;
+}
+
+.btn-enter-task {
+  cursor: pointer;
+}
+
+#task-table {
+  margin-top: 40px;
+}
