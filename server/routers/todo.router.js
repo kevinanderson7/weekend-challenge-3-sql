@@ -32,23 +32,37 @@ router.post('/', (req, res) => {
     });
 });
 
-// router.put('/taskStatus', (req, res) => {
-//     const taskStatus = req.params.task_status;
-//     const taskStatusData = req.body;
+router.put('/:id', (req, res) => {
+  const id = req.params.id;
+  const taskStatusData = req.body;
+  console.log('put req.body: ', taskStatusData);
 
-//     const queryText = `UPDATE "todo" SET "task_status" = $1 WHERE "id" = $2;`;
+  const queryText = `UPDATE "todo" SET "task_status" = $1 WHERE "id" = $2;`;
 
-//     pool.query(queryText, [
-//       taskStatusData.task_status,
-//       id
-//     ])
-//     .then((dbResponse) => {
-//       res.sendStatus(200);
-//     })
-//     .catch((error) => {
-//       console.log('error on put route', error);
-//       res.sendStatus(500);
-//     });
-//   });
+  pool
+    .query(queryText, [taskStatusData.task_status, id])
+    .then((dbResponse) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('error on put route', error);
+      res.sendStatus(500);
+    });
+});
+
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  const queryText = `DELETE FROM "todo" WHERE "id" = $1;`;
+
+  pool
+    .query(queryText, [id])
+    .then((dbResponse) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('error on delete', error);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

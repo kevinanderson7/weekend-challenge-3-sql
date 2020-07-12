@@ -2,14 +2,24 @@ $(document).ready(onReady);
 
 function onReady() {
   $('#js-btn-enter-task').on('click', clickEnterTask);
-  //   $('#checkbox-input').on('change', updateTaskStatus);
+  $('#todoTableBody').on('click', '.js-btn-delete', clickDeleteTask);
+  $('#todoTableBody').on('click', '.js-btn-task-status', clickTaskComplete);
   getTaskData();
   console.log('jq');
 }
 
+// function clickingCheckbox() {
+//   console.log('clicking checkbox');
+// }
 function clickEnterTask() {
   console.log('clicking enterTask');
   submitTask();
+}
+function clickDeleteTask() {
+  // console.log($(this).parent().parent().data('id'));
+
+  const id = $(this).parent().parent().data('id');
+  deleteTask(id);
 }
 
 function submitTask() {
@@ -34,8 +44,37 @@ function submitTask() {
       });
   }
 }
+function clickTaskComplete() {
+  console.log('edit task status');
+  let newTaskStatus = 'complete';
+  console.log('newTaskStatus: ', newTaskStatus);
 
-function updateTaskStatus() {}
+  const id = $(this).data('idTask');
+  updateTaskStatus(id, newTaskStatus);
+}
+function updateTaskStatus(id, newTaskStatus) {
+  //   if (newTaskStatus === 'complete') {
+  //     console.log(newTaskStatus);
+
+  //     newTaskStatus = 'complete';
+  //   } else {
+  //     newTaskStatus = 'incomplete';
+  //   }
+  $.ajax({
+    type: 'PUT',
+    url: `/todo/${id}`,
+    data: {
+      newTaskStatus,
+    },
+  })
+    .then((response) => {
+      getTaskData();
+    })
+    .catch((error) => {
+      console.log('error: ', error);
+      alert('did not submit checkbox successfully');
+    });
+}
 
 function getTaskData() {
   $.ajax({
@@ -50,33 +89,55 @@ function getTaskData() {
       $('#todoTableBody').empty();
 
       for (let task of listOfTasks) {
-        $('#todoTableBody').append(`
+        let tableRow = $(`
             <tr>
             <td>${task.task}</td>
-            <td><input type="checkbox" id="checkbox-input"></td>
+            <td><button data-id-task="${task.id}" class="js-btn-task-status">
+            Complete?
+          </button></td>
+          <td><button class="js-btn-delete">
+            Delete
+          </button></td>
           </tr>`);
+
+        tableRow.data('id', task.id);
+        $('#todoTableBody').append(tableRow);
       }
     })
     .catch(function (error) {
       console.log('error in task get', error);
     });
 }
+function deleteTask(taskId) {
+  console.log('clicking delete task');
 
-function updateRank(id, taskStatus) {
-  console.log('RANK SAVE - id:', id);
-  console.log('RANK SAVE - rank:', taskStatus);
   $.ajax({
-    type: 'PUT',
-    url: `/todo/taskStatus/${id}`,
-    data: {
-      taskStatus,
-    },
+    type: 'DELETE',
+    url: `/todo/${taskId}`,
   })
     .then((response) => {
-      getMusicData();
+      getTaskData();
     })
-    .catch((err) => {
-      console.log('err: ', err);
-      alert('Stuff broke!!!');
+    .catch((error) => {
+      console.log('error: ', error);
+      alert('Stuff broke!');
     });
 }
+// function updateRank(id, taskStatus) {
+//   console.log('RANK SAVE - id:', id);
+//   console.log('RANK SAVE - rank:', taskStatus);
+//   $.ajax({
+//     type: 'PUT',
+//     url: `/todo/taskStatus/${id}`,
+//     data: {
+//       taskStatus,
+//     },
+//   })
+//     .then((response) => {
+//       getMusicData();
+//     })
+//     .catch((err) => {
+//       console.log('err: ', err);
+//       alert('Stuff broke!!!');
+//     });
+// }
