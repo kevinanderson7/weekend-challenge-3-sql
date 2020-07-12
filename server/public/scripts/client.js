@@ -8,26 +8,14 @@ function onReady() {
   console.log('jq');
 }
 
-// function clickingCheckbox() {
-//   console.log('clicking checkbox');
-// }
 function clickEnterTask() {
   console.log('clicking enterTask');
   submitTask();
 }
 function clickDeleteTask() {
-  // console.log($(this).parent().parent().data('id'));
-
   const id = $(this).parent().parent().data('id');
   deleteTask(id);
 }
-
-// function clickCompleteTask() {
-//     // console.log($(this).parent().parent().data('id'));
-
-//     const id = $(this).parent().parent().data('id');
-//     deleteTask(id);
-//   }
 
 function submitTask() {
   const taskToSend = {
@@ -58,21 +46,11 @@ function clickTaskComplete() {
 
   $(this).addClass('complete');
   updateTaskStatus(id);
-
-  //   let newTaskStatus = 'complete';
-  //   console.log('newTaskStatus: ', newTaskStatus);
-
-  //   const id = $(this).data('idTask');
 }
 
 function updateTaskStatus(taskId) {
-  //   if (newTaskStatus === 'complete') {
-  //     console.log(newTaskStatus);
-
   let newTaskStatus = 'complete';
-  //   } else {
-  //     newTaskStatus = 'incomplete';
-  //   }
+
   $.ajax({
     type: 'PUT',
     url: `/todo/${taskId}`,
@@ -120,7 +98,7 @@ function getTaskData() {
           let tableRow = $(`
             <tr class="">
             <td class="task-box">${task.task}</td>
-            <td class="complete-box"><button data-id-task="${task.id}" class="js-btn-task-status btn btn-outline-dark complete-button">
+            <td class="complete-box"><button data-id-task="${task.id}" class="js-btn-task-status btn btn-outline-success complete-button">
             Complete
           </button></td>
           <td><button class="js-btn-delete btn btn-outline-danger">
@@ -152,21 +130,3 @@ function deleteTask(taskId) {
       alert('Stuff broke!');
     });
 }
-// function updateRank(id, taskStatus) {
-//   console.log('RANK SAVE - id:', id);
-//   console.log('RANK SAVE - rank:', taskStatus);
-//   $.ajax({
-//     type: 'PUT',
-//     url: `/todo/taskStatus/${id}`,
-//     data: {
-//       taskStatus,
-//     },
-//   })
-//     .then((response) => {
-//       getMusicData();
-//     })
-//     .catch((err) => {
-//       console.log('err: ', err);
-//       alert('Stuff broke!!!');
-//     });
-// }

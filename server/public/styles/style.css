@@ -1,4 +1,10 @@
 body {
+  height: 100%;
+  width: 100%;
+  background-image: url('isaac-benhesed-onLbXleIkds-unsplash.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -32,9 +38,6 @@ body {
 }
 label {
   font-size: 1.3rem;
-}
-button {
-  background-color: rgb(4, 100, 68);
 }
 
 tbody {
