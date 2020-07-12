@@ -22,6 +22,13 @@ function clickDeleteTask() {
   deleteTask(id);
 }
 
+// function clickCompleteTask() {
+//     // console.log($(this).parent().parent().data('id'));
+
+//     const id = $(this).parent().parent().data('id');
+//     deleteTask(id);
+//   }
+
 function submitTask() {
   const taskToSend = {
     task: $('.js-task-input').val(),
@@ -45,24 +52,26 @@ function submitTask() {
   }
 }
 function clickTaskComplete() {
-  console.log('edit task status');
-  let newTaskStatus = 'complete';
-  console.log('newTaskStatus: ', newTaskStatus);
+  const id = $(this).parent().parent().data('id');
+  console.log('edit task status', id);
+  updateTaskStatus(id);
 
-  const id = $(this).data('idTask');
-  updateTaskStatus(id, newTaskStatus);
+  //   let newTaskStatus = 'complete';
+  //   console.log('newTaskStatus: ', newTaskStatus);
+
+  //   const id = $(this).data('idTask');
 }
-function updateTaskStatus(id, newTaskStatus) {
+function updateTaskStatus(taskId) {
   //   if (newTaskStatus === 'complete') {
   //     console.log(newTaskStatus);
 
-  //     newTaskStatus = 'complete';
+  let newTaskStatus = 'complete';
   //   } else {
   //     newTaskStatus = 'incomplete';
   //   }
   $.ajax({
     type: 'PUT',
-    url: `/todo/${id}`,
+    url: `/todo/${taskId}`,
     data: {
       newTaskStatus,
     },

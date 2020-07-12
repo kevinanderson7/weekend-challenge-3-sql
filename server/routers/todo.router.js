@@ -34,13 +34,16 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id;
-  const taskStatusData = req.body;
-  console.log('put req.body: ', taskStatusData);
+  console.log(req.body);
+
+  let taskStatusData = req.body;
+  console.log('put req.body: ', taskStatusData.newTaskStatus);
+  taskStatusData = taskStatusData.newTaskStatus;
 
   const queryText = `UPDATE "todo" SET "task_status" = $1 WHERE "id" = $2;`;
 
   pool
-    .query(queryText, [taskStatusData.task_status, id])
+    .query(queryText, [taskStatusData, id])
     .then((dbResponse) => {
       res.sendStatus(200);
     })
