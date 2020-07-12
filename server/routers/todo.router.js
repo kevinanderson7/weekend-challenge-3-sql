@@ -3,7 +3,7 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 router.get('/', (req, res) => {
-  const queryText = `SELECT * FROM "todo";`;
+  const queryText = `SELECT * FROM "todo" ORDER BY "task_status" DESC;`;
 
   pool
     .query(queryText)
@@ -18,11 +18,11 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const todoData = req.body;
-  const queryText = `INSERT INTO "todo" ("task" )
-                        VALUES ($1 );`;
+  const queryText = `INSERT INTO "todo" ("task","task_status" )
+                        VALUES ($1, $2 );`;
 
   pool
-    .query(queryText, [todoData.task])
+    .query(queryText, [todoData.task, todoData.task_status])
     .then((dbResponse) => {
       res.sendStatus(201);
     })

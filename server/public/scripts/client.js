@@ -32,6 +32,7 @@ function clickDeleteTask() {
 function submitTask() {
   const taskToSend = {
     task: $('.js-task-input').val(),
+    task_status: 'incomplete',
   };
   console.log(taskToSend);
   if (taskToSend.task === '') {
